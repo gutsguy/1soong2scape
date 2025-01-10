@@ -1,0 +1,26 @@
+# 유니티 기본 폴더 제외
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+
+# OS 별 불필요 파일 제외
+.DS_Store
+Thumbs.db
+*.swp
+
+# 유니티 캐시 및 임시 파일
+*.csproj
+*.unityproj
+*.sln
+*.userprefs
+*.pidb
+
+# 유니티 빌드 결과 파일
+*.apk
+*.exe
+*.app
+*.webgl
+*.pdb
