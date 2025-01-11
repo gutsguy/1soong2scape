@@ -31,7 +31,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SendHelloMessage();  // 방에 입장하면 Hello 메시지를 전송합니다.
 
         // 네트워크 캐릭터 생성
-        Vector3 spawnPosition = new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
+        Vector3 spawnPosition = new Vector3(1, 1, 1);
         GameObject player = PhotonNetwork.Instantiate("NetworkPlayer", spawnPosition, Quaternion.identity);
 
 
