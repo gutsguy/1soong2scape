@@ -98,6 +98,17 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
+        private bool _isDancing = false;
+        private int _animIDDance1;
+        private int _animIDDance2;
+        private int _animIDDance3;
+        private int _animIDDance4;
+        private int _animIDDance5;
+        private int _animIDDance6;
+        private int _animIDDance7;
+        private int _animIDDance8;
+        private int _animIDDance9;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -159,6 +170,9 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+
+            // 춤 애니메이션 처리
+            HandleDanceInput();
         }
 
         private void LateUpdate()
@@ -173,6 +187,17 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+
+            // 춤 애니메이션 파라미터 추가
+            _animIDDance1 = Animator.StringToHash("isDancing1");
+            _animIDDance2 = Animator.StringToHash("isDancing2");
+            _animIDDance3 = Animator.StringToHash("isDancing3");
+            _animIDDance4 = Animator.StringToHash("isDancing4");
+            _animIDDance5 = Animator.StringToHash("isDancing5");
+            _animIDDance6 = Animator.StringToHash("isDancing6");
+            _animIDDance7 = Animator.StringToHash("isDancing7");
+            _animIDDance8 = Animator.StringToHash("isDancing8");
+            _animIDDance9 = Animator.StringToHash("isDancing9");
         }
 
         private void GroundedCheck()
@@ -386,6 +411,93 @@ namespace StarterAssets
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+            }
+        }
+
+        private void HandleDanceInput()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                PlayDanceAnimation(_animIDDance1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                PlayDanceAnimation(_animIDDance2);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                PlayDanceAnimation(_animIDDance3);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                PlayDanceAnimation(_animIDDance4);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                PlayDanceAnimation(_animIDDance5);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                PlayDanceAnimation(_animIDDance6);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                PlayDanceAnimation(_animIDDance7);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                PlayDanceAnimation(_animIDDance8);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                PlayDanceAnimation(_animIDDance9);
+            }
+
+
+
+            // 움직임 발생 시 춤 멈춤
+            if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0 || _input.jump)
+            {
+                StopDancing();
+            }
+        }
+
+        private void PlayDanceAnimation(int danceParam)
+        {
+            _isDancing = true;
+            _animator.SetBool(_animIDDance1, danceParam == _animIDDance1);
+            _animator.SetBool(_animIDDance2, danceParam == _animIDDance2);
+            _animator.SetBool(_animIDDance3, danceParam == _animIDDance3);
+            _animator.SetBool(_animIDDance4, danceParam == _animIDDance4);
+            _animator.SetBool(_animIDDance5, danceParam == _animIDDance5);
+            _animator.SetBool(_animIDDance6, danceParam == _animIDDance6);
+            _animator.SetBool(_animIDDance7, danceParam == _animIDDance7);
+            _animator.SetBool(_animIDDance8, danceParam == _animIDDance8);
+            _animator.SetBool(_animIDDance9, danceParam == _animIDDance9);
+        }
+
+        private void StopDancing()
+        {
+            if (_isDancing)
+            {
+                _animator.SetBool(_animIDDance1, false);
+                _animator.SetBool(_animIDDance2, false);
+                _animator.SetBool(_animIDDance3, false);
+                _animator.SetBool(_animIDDance4, false);
+                _animator.SetBool(_animIDDance5, false);
+                _animator.SetBool(_animIDDance6, false);
+                _animator.SetBool(_animIDDance7, false);
+                _animator.SetBool(_animIDDance8, false);
+                _animator.SetBool(_animIDDance9, false);
+                _isDancing = false;
             }
         }
     }
