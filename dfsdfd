@@ -1,0 +1,17 @@
+[33mcommit 7d5412a14fb38f3b9126a62906ab036089c01690[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: gutsguy <eojin5356@gmail.com>
+Date:   Sat Jan 11 20:54:11 2025 +0900
+
+    add door open
+
+[33mcommit 312d8d02e9ab1c87bbfdb361280b047e30fc1023[m
+Author: gutsguy <eojin5356@gmail.com>
+Date:   Sat Jan 11 16:21:50 2025 +0900
+
+    add voice chat
+
+[33mcommit 3bfe6f6e68007760b0d126ad78008dfaa8d2f392[m
+Author: gutsguy <eojin5356@gmail.com>
+Date:   Sat Jan 11 00:59:10 2025 +0900
+
+    initial commit
