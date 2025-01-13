@@ -5,6 +5,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class GoogleSTTService : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class GoogleSTTService : MonoBehaviour
                     float LCS_similarity = LCS.CalculateSimilarity(transcript, targetPhrase);
                     Debug.Log($"LCS Similarity: {LCS_similarity * 100}%");
 
-                    float similarity = MathF.Max(Levenshtein_similarity, LCS_similarity); 
+                    float similarity = MathF.Max(Levenshtein_similarity, LCS_similarity);
 
                     if (similarity >= 0.85f) // 유사도가 85% 이상
                     {
@@ -90,5 +91,75 @@ public class GoogleSTTService : MonoBehaviour
                 Debug.LogError($"Failed to parse Google STT response: {e.Message}");
             }
         }
+    }
+
+    public async Task<string> GetTextFromSpeech(byte[] audioData)
+    {
+        if (audioData == null || audioData.Length == 0)
+        {
+            Debug.LogWarning("Audio data is null or empty. Cannot send to Google STT.");
+            return null;
+        }
+
+        string audioContent = Convert.ToBase64String(audioData);
+        string requestJson = $"{{\"config\": {{\"encoding\":\"LINEAR16\",\"sampleRateHertz\":16000,\"languageCode\":\"{Locale}\"}},\"audio\":{{\"content\":\"{audioContent}\"}}}}";
+        string fullUrl = URL + API_KEY;
+
+        using var request = new UnityWebRequest(fullUrl, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(requestJson);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        Debug.Log("Sending request to Google STT...");
+        await request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError($"Google STT Request Failed: {request.error}");
+            return null; // 에러 발생 시 null 반환
+        }
+        else
+        {
+            string responseText = request.downloadHandler.text;
+            Debug.Log($"Google STT Response: {responseText}");
+            try
+            {
+                // JSON 파싱
+                var json = JObject.Parse(responseText);
+                string transcript = json["results"]?[0]?["alternatives"]?[0]?["transcript"]?.ToString();
+                float confidence = json["results"]?[0]?["alternatives"]?[0]?["confidence"]?.ToObject<float>() ?? 0;
+
+                // 화면에 표시
+                if (!string.IsNullOrEmpty(transcript))
+                {
+                    Debug.Log($"Transcript: {transcript}");
+                    Debug.Log($"Confidence: {confidence * 100:F2}%");
+
+                    // 텍스트 UI에 표시
+                    if (transcriptText != null)
+                    {
+                        transcriptText.text = $"Transcript: {transcript}\nConfidence: {confidence * 100:F2}%";
+                    }
+
+                    return transcript; // transcript 반환
+                }
+                else
+                {
+                    Debug.LogWarning("No transcript found in STT response.");
+                    if (transcriptText != null)
+                    {
+                        transcriptText.text = "No transcript found.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to parse JSON: {ex.Message}");
+            }
+        }
+
+        return null; // 예외 상황에서 null 반환
+
     }
 }
