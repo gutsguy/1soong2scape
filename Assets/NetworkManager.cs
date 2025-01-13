@@ -17,7 +17,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to Photon Cloud!");
-        PhotonNetwork.JoinOrCreateRoom("HelloRoom", new Photon.Realtime.RoomOptions { MaxPlayers = 2 }, null);
+        PhotonNetwork.JoinOrCreateRoom("HelloRoom", new Photon.Realtime.RoomOptions { MaxPlayers = 20 }, null);
     }
 
     public override void OnDisconnected(Photon.Realtime.DisconnectCause cause)
