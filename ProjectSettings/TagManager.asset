@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - TutorialDoor2
+  - TutorialDoor1
+  - Question1Door
+  - Question2Door
+  - Question3Door
+  - Question4Door
   layers:
   - Default
   - TransparentFX

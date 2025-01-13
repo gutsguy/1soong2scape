@@ -7,9 +7,30 @@ public class Question1Button : MonoBehaviour
     private AudioClip micClip;
     private string micDevice;
     private bool isRecording = false;
+    private MicDoor[] micDoors;
     [SerializeField] private string targetPhrase = "보라";
     public TextMesh transcriptText;
     
+
+    void Start(){
+        GameObject[] doorObjects = GameObject.FindGameObjectsWithTag("Question1Door");
+
+        if (doorObjects.Length == 0)
+        {
+            Debug.LogError("No doors with tag 'Question1Door' found!");
+        }
+
+        // MicDoor 컴포넌트를 배열에 저장
+        micDoors = new MicDoor[doorObjects.Length];
+        for (int i = 0; i < doorObjects.Length; i++)
+        {
+            micDoors[i] = doorObjects[i].GetComponent<MicDoor>();
+            if (micDoors[i] == null)
+            {
+                Debug.LogError($"GameObject {doorObjects[i].name} does not have a MicDoor component!");
+            }
+        }
+    }
 
     // Start is called before the first frame update
     private void OnMouseDown()
@@ -91,25 +112,45 @@ public class Question1Button : MonoBehaviour
                     if (similarity >= 0.85f) // 유사도가 85% 이상
                     {
                         Debug.Log("Speech matched the target phrase! Success!");
+                        foreach (MicDoor door in micDoors)
+                        {
+                            door?.OpenDoor(); // 모든 문 열기
+                        }
                     }
                     else
                     {
                         Debug.Log("Speech did not match the target phrase. Try again.");
+                        foreach (MicDoor door in micDoors)
+                        {
+                            door?.CloseDoor(); // 모든 문 닫기
+                        }
                     }
                 }
                 else
                 {
                     Debug.LogError("Display Text is not assigned in the Inspector!");
+                        foreach (MicDoor door in micDoors)
+                        {
+                            door?.CloseDoor(); // 모든 문 닫기
+                        }
                 }
             }
             else
             {
                 Debug.LogError("GoogleSTTService is not found in the scene!");
+                foreach (MicDoor door in micDoors)
+                {
+                    door?.CloseDoor(); // 모든 문 닫기
+                }
             }
         }
         else
         {
             Debug.LogWarning("No audio samples were recorded.");
+            foreach (MicDoor door in micDoors)
+            {
+                door?.CloseDoor(); // 모든 문 닫기
+            }
         }
     }
 
