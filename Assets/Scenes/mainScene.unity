@@ -43151,7 +43151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPhrase: "\uBAB0\uC785"
-  transcriptText: {fileID: 0}
+  transcriptText: {fileID: 662679610}
 --- !u!1001 &1356625055
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58132,11 +58132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65c43055fb6212b458a20b0c466ab34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  micClip: {fileID: 0}
-  micDevice: 
-  isRecording: 0
-  targetPhrase: "\uC548\uB155\uD558\uC138\uC694"
-  transcriptText: {fileID: 1995294627}
 --- !u!1001 &1858100727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64626,7 +64621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPhrase: 41
-  transcriptText: {fileID: 0}
+  transcriptText: {fileID: 1790117381}
 --- !u!1001 &2037974688
 PrefabInstance:
   m_ObjectHideFlags: 0
