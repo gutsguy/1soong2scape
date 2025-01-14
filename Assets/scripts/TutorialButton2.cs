@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class TutorialButton2 : MonoBehaviour
 {
@@ -9,14 +10,19 @@ public class TutorialButton2 : MonoBehaviour
     private bool isRecording = false;
     private MicDoor micDoor;
     [SerializeField] private string targetPhrase = "안녕하세요";
-    public TextMesh transcriptText;
-    
+    public TextMeshPro transcriptText;
+
+    public GameObject micStatusIcon;
 
     void Start(){
         micDoor = GameObject.FindWithTag("TutorialDoor2")?.GetComponent<MicDoor>();
         if (micDoor == null)
         {
             Debug.LogError("MicDoor component with tag 'TutorialDoor2' not found!");
+        }
+        if (micStatusIcon != null)
+        {
+            micStatusIcon.SetActive(false);  // 기본적으로 비활성화
         }
     }
 
@@ -37,6 +43,7 @@ public class TutorialButton2 : MonoBehaviour
     }
 
     private void StartRecording(){
+        micStatusIcon.SetActive(true);
         Debug.Log("Recording started...");
         if (Microphone.devices.Length == 0)
         {
@@ -59,6 +66,7 @@ public class TutorialButton2 : MonoBehaviour
     }
 
     private async void StopRecording(){
+        micStatusIcon.SetActive(false);
         Debug.Log("Recording stopped...");
 
         if (micClip == null)
