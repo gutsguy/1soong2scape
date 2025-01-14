@@ -1045,6 +1045,7 @@ GameObject:
   - component: {fileID: 8160471441102628746}
   - component: {fileID: 6385778605351847062}
   - component: {fileID: 7825730804057348198}
+  - component: {fileID: 4926923189527249801}
   m_Layer: 8
   m_Name: NetworkPlayer
   m_TagString: Player
@@ -1317,6 +1318,7 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: 7569671045033997130}
+  - {fileID: 4926923189527249801}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1530,6 +1532,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82d1fc9db592f04d9d79cc74c70303b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4926923189527249801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926081852918481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: Speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: Jump
+  - Type: 4
+    SynchronizeType: 1
+    Name: Grounded
+  - Type: 4
+    SynchronizeType: 1
+    Name: FreeFall
+  - Type: 1
+    SynchronizeType: 2
+    Name: MotionSpeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing1
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing2
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing3
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing4
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing5
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing6
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing7
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing8
+  - Type: 4
+    SynchronizeType: 1
+    Name: isDancing9
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &4523139366846529165
 GameObject:
   m_ObjectHideFlags: 0

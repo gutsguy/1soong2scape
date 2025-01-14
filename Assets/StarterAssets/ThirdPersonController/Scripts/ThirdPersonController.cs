@@ -1,4 +1,5 @@
 ﻿ using UnityEngine;
+using Photon.Pun;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -132,10 +133,11 @@ namespace StarterAssets
 #endif
             }
         }
-
+        private PhotonView _photonView;
 
         private void Awake()
         {
+            _photonView = GetComponent<PhotonView>();
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -145,6 +147,7 @@ namespace StarterAssets
 
         private void Start()
         {
+            if (_photonView != null && !_photonView.IsMine) return;
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _hasAnimator = TryGetComponent(out _animator);
