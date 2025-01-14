@@ -1164,6 +1164,11 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  model1: {fileID: 4614436555781047758}
+  model2: {fileID: 6190062721409850848}
+  animator: {fileID: 6982812146204527121}
+  avatar1: {fileID: 9000000, guid: 59b09eec237dd5b46a5fce9ea1ed0055, type: 3}
+  avatar2: {fileID: 9000000, guid: e8a3c44938a2cd44a9082a03b431fc0e, type: 3}
 --- !u!114 &5885216827943657505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3076,6 +3081,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59b09eec237dd5b46a5fce9ea1ed0055, type: 3}
+--- !u!1 &4614436555781047758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 59b09eec237dd5b46a5fce9ea1ed0055, type: 3}
+  m_PrefabInstance: {fileID: 5532861569708669087}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5422920222901821300 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 59b09eec237dd5b46a5fce9ea1ed0055, type: 3}
@@ -3166,6 +3176,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8a3c44938a2cd44a9082a03b431fc0e, type: 3}
+--- !u!1 &6190062721409850848 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e8a3c44938a2cd44a9082a03b431fc0e, type: 3}
+  m_PrefabInstance: {fileID: 6424082426695819441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6821921626309117786 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e8a3c44938a2cd44a9082a03b431fc0e, type: 3}

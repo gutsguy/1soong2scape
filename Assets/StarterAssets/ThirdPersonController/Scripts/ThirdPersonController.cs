@@ -110,6 +110,16 @@ namespace StarterAssets
         private int _animIDDance8;
         private int _animIDDance9;
 
+
+        private bool isUsingModel1 = true;  // 현재 모델 상태
+        public GameObject model1;  // 원래 모델 오브젝트
+        public GameObject model2;  // 다른 모델 오브젝트
+        public Animator animator;  // Animator 컴포넌트
+
+        public Avatar avatar1;  // 모델 1의 아바타
+        public Avatar avatar2;  // 모델 2의 아바타
+
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -176,6 +186,11 @@ namespace StarterAssets
 
             // 춤 애니메이션 처리
             HandleDanceInput();
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                SwitchModel();
+            }
         }
 
         private void LateUpdate()
@@ -521,6 +536,26 @@ namespace StarterAssets
         private void ChangeToFirstPersonView()
         {
             CinemachineCameraTarget.transform.localPosition = new Vector3(0, 1.5f, 0);  // 1인칭 거리 설정
+        }
+
+        private void SwitchModel()
+        {
+            isUsingModel1 = !isUsingModel1;
+
+            if (isUsingModel1)
+            {
+                model1.SetActive(true);
+                model2.SetActive(false);
+                animator.avatar = avatar1;  // 아바타를 첫 번째 모델로 변경
+                Debug.Log("모델 1로 변경되었습니다.");
+            }
+            else
+            {
+                model1.SetActive(false);
+                model2.SetActive(true);
+                animator.avatar = avatar2;  // 아바타를 두 번째 모델로 변경
+                Debug.Log("모델 2로 변경되었습니다.");
+            }
         }
     }
 }
