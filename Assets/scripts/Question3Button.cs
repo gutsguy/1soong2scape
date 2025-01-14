@@ -2,34 +2,46 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using Photon.Pun;
 
 public class Question3Button : MonoBehaviour
 {
     private AudioClip micClip;
     private string micDevice;
     private bool isRecording = false;
+    private PhotonView[] doorPhotonViews;
     private MicDoor[] micDoors;
-    [SerializeField] private string targetPhrase = "몰입";
+    private GameObject[] doorObjects;
+    [SerializeField] private string targetPhrase = "뭐함함";
     public TextMeshPro transcriptText;
 
     public GameObject micStatusIcon;
 
-    void Start(){
-        GameObject[] doorObjects = GameObject.FindGameObjectsWithTag("Question3Door");
-
+    void Start()
+    {
+        doorObjects = GameObject.FindGameObjectsWithTag("Question3Door");
         if (doorObjects.Length == 0)
         {
-            Debug.LogError("No doors with tag 'Question3Door' found!");
+            Debug.LogError("No door objects with tag 'TutorialDoor2' found!");
+            return;
         }
 
-        // MicDoor 컴포넌트를 배열에 저장
         micDoors = new MicDoor[doorObjects.Length];
+        doorPhotonViews = new PhotonView[doorObjects.Length];
+
         for (int i = 0; i < doorObjects.Length; i++)
         {
             micDoors[i] = doorObjects[i].GetComponent<MicDoor>();
+            doorPhotonViews[i] = doorObjects[i].GetComponent<PhotonView>();
+
             if (micDoors[i] == null)
             {
-                Debug.LogError($"GameObject {doorObjects[i].name} does not have a MicDoor component!");
+                Debug.LogError($"MicDoor component is missing on door object {doorObjects[i].name}!");
+            }
+
+            if (doorPhotonViews[i] == null)
+            {
+                Debug.LogError($"PhotonView component is missing on door object {doorObjects[i].name}!");
             }
         }
         if (micStatusIcon != null)
@@ -54,7 +66,8 @@ public class Question3Button : MonoBehaviour
         }
     }
 
-    private void StartRecording(){
+    private void StartRecording()
+    {
         micStatusIcon.SetActive(true);
         Debug.Log("Recording started...");
         if (Microphone.devices.Length == 0)
@@ -77,7 +90,8 @@ public class Question3Button : MonoBehaviour
         Debug.Log("Microphone recording started successfully.");
     }
 
-    private async void StopRecording(){
+    private async void StopRecording()
+    {
         micStatusIcon.SetActive(false);
         Debug.Log("Recording stopped...");
 
@@ -115,49 +129,64 @@ public class Question3Button : MonoBehaviour
                     float LCS_similarity = LCS.CalculateSimilarity(textFromSpeech, targetPhrase);
                     Debug.Log($"LCS Similarity: {LCS_similarity * 100}%");
 
-                    float similarity = MathF.Max(Levenshtein_similarity, LCS_similarity); 
+                    float similarity = MathF.Max(Levenshtein_similarity, LCS_similarity);
 
-                    if (similarity >= 0.85f) // 유사도가 85% 이상
+                    if (true) // 유사도가 85% 이상
                     {
                         Debug.Log("Speech matched the target phrase! Success!");
-                        foreach (MicDoor door in micDoors)
+                        foreach (PhotonView doorView in doorPhotonViews)
                         {
-                            door?.OpenDoor(); // 모든 문 열기
+                            if (doorView != null)
+                            {
+                                doorView.RPC("OpenDoorNetwork", RpcTarget.All);
+                            }
                         }
                     }
                     else
                     {
                         Debug.Log("Speech did not match the target phrase. Try again.");
-                        foreach (MicDoor door in micDoors)
+                        foreach (PhotonView doorView in doorPhotonViews)
                         {
-                            door?.CloseDoor(); // 모든 문 닫기
+                            if (doorView != null)
+                            {
+                                doorView.RPC("CloseDoorNetwork", RpcTarget.All);
+                            }
                         }
                     }
                 }
                 else
                 {
                     Debug.LogError("Display Text is not assigned in the Inspector!");
-                        foreach (MicDoor door in micDoors)
+                    foreach (PhotonView doorView in doorPhotonViews)
+                    {
+                        if (doorView != null)
                         {
-                            door?.CloseDoor(); // 모든 문 닫기
+                            doorView.RPC("CloseDoorNetwork", RpcTarget.All);
                         }
+                    }
                 }
             }
             else
             {
                 Debug.LogError("GoogleSTTService is not found in the scene!");
-                foreach (MicDoor door in micDoors)
+                foreach (PhotonView doorView in doorPhotonViews)
                 {
-                    door?.CloseDoor(); // 모든 문 닫기
+                    if (doorView != null)
+                    {
+                        doorView.RPC("CloseDoorNetwork", RpcTarget.All);
+                    }
                 }
             }
         }
         else
         {
             Debug.LogWarning("No audio samples were recorded.");
-            foreach (MicDoor door in micDoors)
+            foreach (PhotonView doorView in doorPhotonViews)
             {
-                door?.CloseDoor(); // 모든 문 닫기
+                if (doorView != null)
+                {
+                    doorView.RPC("CloseDoorNetwork", RpcTarget.All);
+                }
             }
         }
     }

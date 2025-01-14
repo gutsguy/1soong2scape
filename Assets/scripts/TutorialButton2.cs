@@ -2,23 +2,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using Photon.Pun;
 
 public class TutorialButton2 : MonoBehaviour
 {
     private AudioClip micClip;
     private string micDevice;
     private bool isRecording = false;
+    private PhotonView doorPhotonView;
     private MicDoor micDoor;
+    private GameObject doorObject;
     [SerializeField] private string targetPhrase = "안녕하세요";
     public TextMeshPro transcriptText;
 
     public GameObject micStatusIcon;
 
     void Start(){
-        micDoor = GameObject.FindWithTag("TutorialDoor2")?.GetComponent<MicDoor>();
-        if (micDoor == null)
+        doorObject = GameObject.FindWithTag("TutorialDoor2");
+        if (doorObject != null)
         {
-            Debug.LogError("MicDoor component with tag 'TutorialDoor2' not found!");
+            micDoor = doorObject.GetComponent<MicDoor>();
+            doorPhotonView = doorObject.GetComponent<PhotonView>();  // Door 오브젝트의 PhotonView 가져오기
+
+            if (micDoor == null)
+            {
+                Debug.LogError("MicDoor component not found in doorObject!");
+            }
+            if (doorPhotonView == null)
+            {
+                Debug.LogError("PhotonView component not found in doorObject!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Door object with tag 'TutorialDoor2' not found!");
         }
         if (micStatusIcon != null)
         {
@@ -108,30 +125,31 @@ public class TutorialButton2 : MonoBehaviour
                     if (similarity >= 0.85f) // 유사도가 85% 이상
                     {
                         Debug.Log("Speech matched the target phrase! Success!");
-                        micDoor.OpenDoor();
+                        // Door 오브젝트에 있는 PhotonView를 통해 네트워크 동기화
+                        doorPhotonView.RPC("OpenDoorNetwork", RpcTarget.All);
                     }
                     else
                     {
                         Debug.Log("Speech did not match the target phrase. Try again.");
-                        micDoor.CloseDoor();
+                        doorPhotonView.RPC("CloseDoorNetwork", RpcTarget.All);
                     }
                 }
                 else
                 {
                     Debug.LogError("Display Text is not assigned in the Inspector!");
-                        micDoor.CloseDoor();
+                    doorPhotonView.RPC("CloseDoorNetwork", RpcTarget.All);
                 }
             }
             else
             {
                 Debug.LogError("GoogleSTTService is not found in the scene!");
-                micDoor.CloseDoor();
+                doorPhotonView.RPC("CloseDoorNetwork", RpcTarget.All);
             }
         }
         else
         {
             Debug.LogWarning("No audio samples were recorded.");
-            micDoor.CloseDoor();
+            doorPhotonView.RPC("CloseDoorNetwork", RpcTarget.All);  
         }
     }
 
