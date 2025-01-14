@@ -485,6 +485,8 @@ namespace StarterAssets
             _animator.SetBool(_animIDDance7, danceParam == _animIDDance7);
             _animator.SetBool(_animIDDance8, danceParam == _animIDDance8);
             _animator.SetBool(_animIDDance9, danceParam == _animIDDance9);
+
+            ChangeToThirdPersonView();
         }
 
         private void StopDancing()
@@ -502,6 +504,23 @@ namespace StarterAssets
                 _animator.SetBool(_animIDDance9, false);
                 _isDancing = false;
             }
+
+            ChangeToFirstPersonView();
+        }
+
+        private void ChangeToThirdPersonView()
+        {
+            Vector3 cameraForward = _mainCamera.transform.forward;  // 카메라가 바라보는 방향 벡터
+            cameraForward.y = 0;  // 수평 평면에서만 방향 계산
+            cameraForward.Normalize();  // 방향 벡터 정규화
+
+            // 카메라 방향의 뒤쪽으로 이동
+            CinemachineCameraTarget.transform.position = transform.position - cameraForward * 3f + new Vector3(0, 1.5f, 0);
+        }
+
+        private void ChangeToFirstPersonView()
+        {
+            CinemachineCameraTarget.transform.localPosition = new Vector3(0, 1.5f, 0);  // 1인칭 거리 설정
         }
     }
 }
