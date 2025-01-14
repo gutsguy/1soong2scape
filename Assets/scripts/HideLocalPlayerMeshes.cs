@@ -20,6 +20,7 @@ public class HideLocalPlayerMeshes : MonoBehaviourPun
 
     void Update()
     {
+        if (!photonView.IsMine) return;
         if (_animator != null)
         {
             // "isDancing" 애니메이션 상태 확인

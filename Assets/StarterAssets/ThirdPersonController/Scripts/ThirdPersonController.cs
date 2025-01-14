@@ -119,6 +119,8 @@ namespace StarterAssets
         public Avatar avatar1;  // 모델 1의 아바타
         public Avatar avatar2;  // 모델 2의 아바타
 
+        private PhotonView _photonView;
+
 
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
@@ -143,7 +145,6 @@ namespace StarterAssets
 #endif
             }
         }
-        private PhotonView _photonView;
 
         private void Awake()
         {
@@ -157,7 +158,6 @@ namespace StarterAssets
 
         private void Start()
         {
-            if (_photonView != null && !_photonView.IsMine) return;
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _hasAnimator = TryGetComponent(out _animator);
@@ -178,6 +178,7 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (!_photonView.IsMine) return;
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -195,6 +196,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (!_photonView.IsMine) return;
             CameraRotation();
         }
 
