@@ -30,8 +30,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
         SendHelloMessage();  // 방에 입장하면 Hello 메시지를 전송합니다.
 
-        // 네트워크 캐릭터 생성
-        Vector3 spawnPosition = new Vector3(30, 0, 0);
+        int playerIndex = PhotonNetwork.LocalPlayer.ActorNumber;
+
+        Vector3[] spawnPositions = new Vector3[]
+    {
+        new Vector3(30, 0, 0),   // 첫 번째 플레이어 스폰 위치
+        new Vector3(35, 0, 17),   // 두 번째 플레이어 스폰 위치
+    };
+
+        // 최대 인덱스를 넘지 않도록 보정
+        Vector3 spawnPosition = spawnPositions[(playerIndex - 1) % spawnPositions.Length];
         GameObject player = PhotonNetwork.Instantiate("NetworkPlayer", spawnPosition, Quaternion.identity);
 
 

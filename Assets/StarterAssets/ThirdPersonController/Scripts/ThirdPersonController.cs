@@ -178,6 +178,12 @@ namespace StarterAssets
 
         private void Update()
         {
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                SwitchModel();
+            }
+
             if (!_photonView.IsMine) return;
             _hasAnimator = TryGetComponent(out _animator);
 
@@ -188,10 +194,6 @@ namespace StarterAssets
             // 춤 애니메이션 처리
             HandleDanceInput();
 
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                SwitchModel();
-            }
         }
 
         private void LateUpdate()
@@ -549,14 +551,12 @@ namespace StarterAssets
                 model1.SetActive(true);
                 model2.SetActive(false);
                 animator.avatar = avatar1;  // 아바타를 첫 번째 모델로 변경
-                Debug.Log("모델 1로 변경되었습니다.");
             }
             else
             {
                 model1.SetActive(false);
                 model2.SetActive(true);
                 animator.avatar = avatar2;  // 아바타를 두 번째 모델로 변경
-                Debug.Log("모델 2로 변경되었습니다.");
             }
         }
     }
