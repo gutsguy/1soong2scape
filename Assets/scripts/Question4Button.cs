@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using Photon.Pun;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Question4Button : MonoBehaviour
 {
@@ -17,9 +18,19 @@ public class Question4Button : MonoBehaviour
     private const string ReferenceAudioPath = "Assets/MonkeySound.wav";
     private float elapsedTime = 0f;
     public GameObject micStatusIcon;
-    
+    public AudioClip bgmClip;  // BGM mp3 파일을 연결할 변수
+    private AudioSource audioSource;  // BGM 재생을 위한 AudioSource
+    public AudioClip gameClearBGM;       // 게임 클리어 BGM AudioSource
+    private AudioSource gameClearSource;     // 기존 배경음악 AudioSource
 
-    void Start(){
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.loop = true;
+        gameClearSource = gameObject.AddComponent<AudioSource>();
+        gameClearSource.loop = true;
+
         doorObjects = GameObject.FindGameObjectsWithTag("Question4Door");
         if (doorObjects.Length == 0)
         {
@@ -64,6 +75,8 @@ public class Question4Button : MonoBehaviour
         {
             Debug.LogError("No microphone devices found!");
         }
+
+        PlayBGM();
     }
 
     // Start is called before the first frame update
@@ -83,7 +96,8 @@ public class Question4Button : MonoBehaviour
         }
     }
 
-    private void StartRecording(){
+    private void StartRecording()
+    {
         micStatusIcon.SetActive(true);
         Debug.Log("Recoding Started");
         if (Microphone.devices.Length == 0)
@@ -106,7 +120,8 @@ public class Question4Button : MonoBehaviour
         Debug.Log("Microphone recording started successfully.");
     }
 
-    private void StopRecording(){
+    private void StopRecording()
+    {
         micStatusIcon.SetActive(false);
         isRecording = false;
 
@@ -177,6 +192,7 @@ public class Question4Button : MonoBehaviour
                 if (doorView != null)
                 {
                     doorView.RPC("OpenDoorNetwork", RpcTarget.All);
+                    GameClear();
                 }
             }
         }
@@ -195,6 +211,8 @@ public class Question4Button : MonoBehaviour
             }
         }
     }
+
+
 
     private float[] ConvertPCMToFloat(byte[] pcmData)
     {
@@ -246,4 +264,40 @@ public class Question4Button : MonoBehaviour
         return diff;
     }
 
+    private void PlayBGM()
+    {
+        if (bgmClip != null)
+        {
+            audioSource.clip = bgmClip;
+            audioSource.Play();  // BGM 재생 시작
+            Debug.Log("BGM is now playing!");
+        }
+        else
+        {
+            Debug.LogWarning("BGM Clip is not assigned!");
+        }
+    }
+
+    private void GameClear()
+    {
+        Debug.Log("Game Cleared!");
+
+
+        // 기존 배경음악 중지
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+
+        gameClearSource.clip = gameClearBGM;
+
+        // 게임 클리어 BGM 재생
+        if (gameClearSource != null)
+        {
+            gameClearSource.Play();
+        }
+
+        // 추가로 게임 클리어 UI나 동작을 여기에 추가 가능
+        // 예: GameClearUI.SetActive(true);
+    }
 }
