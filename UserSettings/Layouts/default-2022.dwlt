@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 115
+  controlID: 69
   draggingID: 0
 --- !u!114 &3
 MonoBehaviour:
@@ -69,8 +69,8 @@ MonoBehaviour:
     y: 0
     width: 266.5
     height: 760
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -464,7 +464,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 300}
     m_SelectedIDs: b69e0000
     m_LastClickedID: 40630
-    m_ExpandedIDs: 000000002c9d00002e9d0000309d0000329d0000349d0000369d0000389d00003a9d00003c9d00003e9d0000409d0000429d0000449d0000469d0000489d00004a9d00004c9d0000
+    m_ExpandedIDs: 00000000689d00006a9d00006c9d00006e9d0000709d0000729d0000749d0000769d0000789d00007a9d00007c9d00007e9d0000809d0000829d0000849d0000869d0000889d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -492,7 +492,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000002c9d00002e9d0000309d0000329d0000349d0000369d0000389d00003a9d00003c9d00003e9d0000409d0000429d0000449d0000469d0000489d00004a9d00004c9d0000
+    m_ExpandedIDs: 00000000689d00006a9d00006c9d00006e9d0000709d0000729d0000749d0000769d0000789d00007a9d00007c9d00007e9d0000809d0000829d0000849d0000869d0000889d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -631,24 +631,24 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 59.5}
-      m_SelectedIDs: c8320700
-      m_LastClickedID: 471752
-      m_ExpandedIDs: 7c24feffcc24feffa462feffeca5feff3ca6feff04e4feff08fbfffff4ffffff7a1902000e4302002c4c0200d63405001a0c06006027060072330600ac42060062020700
+      scrollPos: {x: 0, y: 0}
+      m_SelectedIDs: 
+      m_LastClickedID: 0
+      m_ExpandedIDs: 08fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Mesh_0136_Mesh_0136Mesh
-        m_OriginalName: Mesh_0136_Mesh_0136Mesh
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 146406
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 4}
       m_SearchString: 
@@ -1014,9 +1014,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 28.483063, y: 1.2093402, z: 3.3903372}
+    m_Target: {x: -30.912155, y: -2.106396, z: 4.587078}
     speed: 2
-    m_Value: {x: 28.483063, y: 1.2093402, z: 3.3903372}
+    m_Value: {x: -30.912155, y: -2.106396, z: 4.587078}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1062,13 +1062,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.16727668, y: -0.70714074, z: 0.17804383, w: 0.66378355}
+    m_Target: {x: -0.2304022, y: 0.65479064, z: -0.22012721, w: -0.68535405}
     speed: 2
-    m_Value: {x: 0.16724844, y: -0.7070214, z: 0.17801377, w: 0.6636715}
+    m_Value: {x: -0.23040195, y: 0.6547899, z: -0.22012697, w: -0.68535334}
   m_Size:
-    m_Target: 4.951893
+    m_Target: 17.455864
     speed: 2
-    m_Value: 4.951893
+    m_Value: 17.455864
   m_Ortho:
     m_Target: 0
     speed: 2
