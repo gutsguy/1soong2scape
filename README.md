@@ -31,28 +31,6 @@ Special Thanks to - 공진우 : BGM 제공
 |![image](https://github.com/user-attachments/assets/6d0bca4c-dfd7-401b-8708-759399c893ed) | ![image](https://github.com/user-attachments/assets/41886aa4-7a6e-48e6-b089-5e87d123f033) | ![image](https://github.com/user-attachments/assets/5d32bf21-3c93-4f10-a883-0145ab607b02) | ![image](https://github.com/user-attachments/assets/ae7dc43a-108b-44f5-9ff1-6754ea5b961e) |
 | Unity 3D | Google Cloud Speech AI | Photon | C# |
 
-
-
-Unity 3D
-
-API
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/7c272da9-f246-48d5-94c4-7a73848ed09a/image.png)
-
- Google Cloud
-    Speech AI
-
-         서버
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/fe1ee584-cb85-474d-b47c-174a2c69c598/9dc3379f-7d68-4957-9154-bad4ef903a44.png)
-
-       Photon
-
-       언어
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/f6cb388f-3934-47d6-9928-26d2e10eb0fc/b59a5376-10fd-4878-8447-0b50816b44c5/image.png)
-
-          C#
-
 # 핵심 기술
 
 ---
