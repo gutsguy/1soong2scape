@@ -22,10 +22,24 @@ public class Question4Button : MonoBehaviour
     private AudioSource audioSource;  // BGM 재생을 위한 AudioSource
     public AudioClip gameClearBGM;       // 게임 클리어 BGM AudioSource
     private AudioSource gameClearSource;     // 기존 배경음악 AudioSource
+    
+    public GameObject timeBarCube;       // 고정된 시간 바(Cube)
+    public GameObject movingCylinder;   // 이동하는 원판(Cylinder)
+    public float totalTime = 5f;        // 총 시간 (초)
+    private Vector3 initialCylinderPos; // Cylinder 초기 위치
+    private Material timeBarMaterial;   // Cube의 Material
+    private bool timerRunning = false;  // 타이머 활성 상태
+
+    private bool isUsingModel1 = true;  // 현재 모델 상태
+    public GameObject model1;  // 원래 모델 오브젝트
+    public GameObject model2;  // 다른 모델 오브젝트
+    public Animator animator;  // Animator 컴포넌트
+
+    public Avatar avatar1;  // 모델 1의 아바타
+    public Avatar avatar2;  // 모델 2의 아바타
 
 
-    void Start()
-    {
+    void Start(){
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = true;
         gameClearSource = gameObject.AddComponent<AudioSource>();
@@ -61,7 +75,6 @@ public class Question4Button : MonoBehaviour
             micStatusIcon.SetActive(false);  // 기본적으로 비활성화
         }
 
-
         string[] devices = Microphone.devices;
         if (devices.Length > 0)
         {
@@ -77,6 +90,25 @@ public class Question4Button : MonoBehaviour
         }
 
         PlayBGM();
+
+        // Cube의 Material 가져오기
+        if (timeBarCube != null)
+        {
+            Renderer cubeRenderer = timeBarCube.GetComponent<Renderer>();
+            if (cubeRenderer != null)
+            {
+                timeBarMaterial = cubeRenderer.material;
+            }
+        }
+
+        // Cylinder 초기 위치 저장
+        if (movingCylinder != null)
+        {
+            initialCylinderPos = movingCylinder.transform.position;
+        }
+
+        // 초기화
+        ResetTimeBar();
     }
 
     // Start is called before the first frame update
@@ -96,8 +128,7 @@ public class Question4Button : MonoBehaviour
         }
     }
 
-    private void StartRecording()
-    {
+    private void StartRecording(){
         micStatusIcon.SetActive(true);
         Debug.Log("Recoding Started");
         if (Microphone.devices.Length == 0)
@@ -118,10 +149,11 @@ public class Question4Button : MonoBehaviour
         }
 
         Debug.Log("Microphone recording started successfully.");
+        timerRunning = true;      // 타이머 시작
+        ResetTimeBar();           // 초기화
     }
 
-    private void StopRecording()
-    {
+    private void StopRecording(){
         micStatusIcon.SetActive(false);
         isRecording = false;
 
@@ -146,6 +178,13 @@ public class Question4Button : MonoBehaviour
         {
             // 경과 시간 업데이트
             elapsedTime += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(elapsedTime / totalTime);
+
+            if (timerRunning)
+            {
+                UpdateTimer();
+            }
 
             if (elapsedTime >= recordingDuration)
             {
@@ -299,5 +338,80 @@ public class Question4Button : MonoBehaviour
 
         // 추가로 게임 클리어 UI나 동작을 여기에 추가 가능
         // 예: GameClearUI.SetActive(true);
+    }
+
+    private void UpdateTimer()
+    {
+        // 진행률 계산 (0~1)
+        float progress = Mathf.Clamp01(elapsedTime / totalTime);
+
+        // Cylinder 이동
+        UpdateCylinderPosition(progress);
+
+        // Cube 색상 업데이트
+        UpdateTimeBarColor(progress);
+
+        // 타이머 종료
+        if (elapsedTime >= totalTime)
+        {
+            timerRunning = false; // 타이머 정지
+        }
+    }
+
+    private void ResetTimeBar()
+    {
+        // Cylinder 위치 초기화
+        if (movingCylinder != null)
+        {
+            movingCylinder.transform.position = initialCylinderPos;
+        }
+
+        // Cube 색상 초기화 (전체 빨간색)
+        if (timeBarMaterial != null)
+        {
+            timeBarMaterial.color = Color.red;
+        }
+    }
+
+    private void UpdateCylinderPosition(float progress)
+    {
+        if (timeBarCube != null && movingCylinder != null)
+        {
+            // Cube의 길이를 기준으로 Cylinder 이동
+            float barLength = timeBarCube.transform.localScale.x;
+            Vector3 cubePos = timeBarCube.transform.position;
+            movingCylinder.transform.position = new Vector3(
+                cubePos.x - barLength / 2 + progress * barLength,
+                movingCylinder.transform.position.y,
+                movingCylinder.transform.position.z
+            );
+        }
+    }
+
+    private void UpdateTimeBarColor(float progress)
+    {
+        if (timeBarMaterial != null)
+        {
+            // 진행된 영역만 초록색으로 변경
+            timeBarMaterial.SetFloat("_Progress", progress);
+        }
+    }
+
+    private void SwitchModel()
+    {
+        isUsingModel1 = !isUsingModel1;
+
+        if (isUsingModel1)
+        {
+            model1.SetActive(true);
+            model2.SetActive(false);
+            animator.avatar = avatar1;  // 아바타를 첫 번째 모델로 변경
+        }
+        else
+        {
+            model1.SetActive(false);
+            model2.SetActive(true);
+            animator.avatar = avatar2;  // 아바타를 두 번째 모델로 변경
+        }
     }
 }

@@ -9,4 +9,10 @@ public class LobbyManager : MonoBehaviour
         Debug.Log("게임 시작 버튼 클릭됨!");
         SceneManager.LoadScene("mainScene");
     }
+
+    public void OnExitGameButton()
+    {
+        Debug.Log("게임 종료 버튼 클릭됨!");
+        Application.Quit();  // 애플리케이션 종료
+    }
 }
