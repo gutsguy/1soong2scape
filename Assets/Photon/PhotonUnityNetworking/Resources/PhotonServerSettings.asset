@@ -49,6 +49,7 @@ MonoBehaviour:
   - OpenDoorNetwork
   - ChangeModelRPC
   - ChangeCharacterModel
+  - GameClear
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

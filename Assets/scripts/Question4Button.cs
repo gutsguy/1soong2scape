@@ -30,16 +30,12 @@ public class Question4Button : MonoBehaviour
     private Material timeBarMaterial;   // Cube의 Material
     private bool timerRunning = false;  // 타이머 활성 상태
 
-    private bool isUsingModel1 = true;  // 현재 모델 상태
-    public GameObject model1;  // 원래 모델 오브젝트
-    public GameObject model2;  // 다른 모델 오브젝트
-    public Animator animator;  // Animator 컴포넌트
+    private PhotonView photonView;
 
-    public Avatar avatar1;  // 모델 1의 아바타
-    public Avatar avatar2;  // 모델 2의 아바타
 
 
     void Start(){
+        photonView = GetComponent<PhotonView>();
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.loop = true;
         gameClearSource = gameObject.AddComponent<AudioSource>();
@@ -223,7 +219,7 @@ public class Question4Button : MonoBehaviour
 
         // 결과 출력
         Debug.Log($"difference: {difference}");
-        if (difference < 600000) // 임계값 30%
+        if (difference < 590000) // 임계값 30%
         {
             Debug.Log("Match successful! Speech is similar.");
             foreach (PhotonView doorView in doorPhotonViews)
@@ -231,7 +227,7 @@ public class Question4Button : MonoBehaviour
                 if (doorView != null)
                 {
                     doorView.RPC("OpenDoorNetwork", RpcTarget.All);
-                    GameClear();
+                    photonView.RPC("GameClear", RpcTarget.All);
                 }
             }
         }
@@ -317,6 +313,7 @@ public class Question4Button : MonoBehaviour
         }
     }
 
+    [PunRPC]
     private void GameClear()
     {
         Debug.Log("Game Cleared!");
@@ -394,24 +391,6 @@ public class Question4Button : MonoBehaviour
         {
             // 진행된 영역만 초록색으로 변경
             timeBarMaterial.SetFloat("_Progress", progress);
-        }
-    }
-
-    private void SwitchModel()
-    {
-        isUsingModel1 = !isUsingModel1;
-
-        if (isUsingModel1)
-        {
-            model1.SetActive(true);
-            model2.SetActive(false);
-            animator.avatar = avatar1;  // 아바타를 첫 번째 모델로 변경
-        }
-        else
-        {
-            model1.SetActive(false);
-            model2.SetActive(true);
-            animator.avatar = avatar2;  // 아바타를 두 번째 모델로 변경
         }
     }
 }

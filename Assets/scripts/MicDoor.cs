@@ -12,7 +12,7 @@ public class MicDoor : MonoBehaviour
         {
             Debug.LogError("Animator component is missing!");
         }
-        animator.SetBool("character_nearby", true); // 지워야할지도
+        animator.SetBool("character_nearby", false); // 지워야할지도
     }
 
     [PunRPC]  // RPC 함수 추가
