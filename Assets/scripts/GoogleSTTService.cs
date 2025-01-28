@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class GoogleSTTService : MonoBehaviour
 {
-    private const string API_KEY = "AIzaSyBHFQmCj1tgVSoSNbDzLWOBDhwL54TDQr8"; // Google Cloud API 키
+    private const string API_KEY = ""; // Google Cloud API 키
     private const string URL = "https://speech.googleapis.com/v1/speech:recognize?key=";
     private const string Locale = "ko-KR"; // 언어 설정
 
